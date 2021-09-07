@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ai.ps.apiauthserver.mapper.AuthMapper">
+    <select id="getAccount" parameterType="String" resultType="AuthUserDTO">
+        /* getAccount */
+        SELECT
+            *
+        FROM
+            AUTH_USER
+        WHERE
+            USERNAME = #{username}
+    </select>
+
+    <select id="getAuthorities" parameterType="int" resultType="String">
+        /* getAuthorities */
+        SELECT
+            ROLE_CD
+        FROM
+            AUTH_ROLE
+        WHERE
+            ROLE_ID in (
+                SELECT
+                    ROLE_ID
+                FROM
+                    AUTH_USER_ROLE_MAP
+                WHERE
+                    USER_ID = #{user_id}
+            )
+    </select>
+</mapper>
