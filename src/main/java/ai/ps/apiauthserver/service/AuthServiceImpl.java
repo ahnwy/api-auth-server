@@ -20,7 +20,6 @@ public class AuthServiceImpl implements AuthService{
     // 유저 정보 조회
     @Override
     public AuthUserDTO getAccount(String username){
-        System.out.println("Service getAccount");
         return authMapper.getAccount(username);
     }
 

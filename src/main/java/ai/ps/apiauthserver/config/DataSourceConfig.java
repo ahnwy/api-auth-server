@@ -32,14 +32,10 @@ public class DataSourceConfig {
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource mysqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
-        dataSource.setUrl("jdbc:log4jdbc:mysql://localhost:3306/api-service?serverTimezone=UTC&characterEncoding=UTF-8");
-        dataSource.setUsername("root");
-        dataSource.setPassword("1234");
-//        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
-//        dataSource.setUrl(env.getProperty("spring.datasource.url"));
-//        dataSource.setUsername(env.getProperty("spring.datasource.username"));
-//        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));
 
         return dataSource;
     }

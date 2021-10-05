@@ -10,6 +10,6 @@ spring:
       client_secret: api-secret
       grant_type: password
       refresh_token: refresh_token
-      access_token_validity_seconds: 3600
-      fresh_token_validity_seconds: 21600
+      access_token_validity_seconds: 360
+      fresh_token_validity_seconds: 31536000
 
