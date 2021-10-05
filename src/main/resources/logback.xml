@@ -1,4 +1,8 @@
 <configuration>
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>192.168.157.32:5001</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-3level %logger{5} - %msg %n</pattern>
@@ -6,7 +10,6 @@
     </appender>
 
     <logger name="jdbc" level="OFF"/>
-
     <logger name="jdbc.sqlonly" level="OFF"/>
     <logger name="jdbc.sqltiming" level="DEBUG"/>
     <logger name="jdbc.audit" level="OFF"/>
@@ -15,6 +18,7 @@
     <logger name="jdbc.connection" level="OFF"/>
 
     <root level="INFO">
+        <appender-ref ref="LOGSTASH" />
         <appender-ref ref="STDOUT" />
     </root>
 

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://maria:3306/api-service?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1234
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  security:
+    jwt:
+      client_id: api-client
+      client_secret: api-secret
+      grant_type: password
+      refresh_token: refresh_token
+      access_token_validity_seconds: 360
+      fresh_token_validity_seconds: 31536000
+
