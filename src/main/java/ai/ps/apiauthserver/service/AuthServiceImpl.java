@@ -1,36 +1,47 @@
 package ai.ps.apiauthserver.service;
 
-import ai.ps.apiauthserver.model.dto.AuthUserDTO;
 import ai.ps.apiauthserver.mapper.AuthMapper;
+import ai.ps.apiauthserver.model.dto.TokenManagementDTO;
+import ai.ps.apiauthserver.model.vo.UserVO;
+import ai.ps.apiauthserver.provider.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class AuthServiceImpl implements AuthService{
 
     @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
     AuthMapper authMapper;
 
-    // 유저 정보 조회
+    //토큰발급
     @Override
-    public AuthUserDTO getAccount(String username){
-        return authMapper.getAccount(username);
+    public String getToken(UserVO userVO){
+        return jwtToken(userVO);
+    }
+    // 토큰 생성
+    public String jwtToken(UserVO userVO){
+        return jwtTokenProvider.createToken(userVO.getUserId(), Collections.singletonList("USER"));
     }
 
-    // 유저 권한 조회
+    // 토큰발급 확인
     @Override
-    public Collection<GrantedAuthority> getAuthorities(int userId){
-        List<String> string_authorities = authMapper.getAuthorities(userId);
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String authority : string_authorities) {
-            authorities.add(new SimpleGrantedAuthority(authority));
-        }
-        return authorities;
+    public Optional<TokenManagementDTO> getTokenYn(UserVO userVO){
+        return authMapper.selectTokenManagement(userVO);
+    }
+
+    // 토큰정보 저장
+    public int saveToken(TokenManagementDTO tokenManagementDTO){
+        return authMapper.saveToken(tokenManagementDTO);
+    }
+
+    // UUID 조회
+    @Override
+    public String getUuid(int userId){
+        return authMapper.getUuid(userId);
     }
 }
