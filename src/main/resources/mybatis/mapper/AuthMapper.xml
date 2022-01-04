@@ -43,4 +43,5 @@
 <!--        /* removeToken */-->
 <!--        delete from TOKEN_MGMT where USER_ID = #{userId} and SVC_ID = #{serviceId};-->
 <!--    </delete>-->
+
 </mapper>
