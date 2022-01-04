@@ -4,8 +4,6 @@ plugins {
 	id 'java'
 }
 
-apply plugin: 'war'
-
 group = 'ap.ps'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -37,8 +35,6 @@ dependencies {
 	//JDBC
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'mysql:mysql-connector-java'
-	//Logging
-	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 	// logstash
 	implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.6'
 
@@ -52,6 +48,9 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+//	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-zipkin', version: '2.2.8.RELEASE'
+//	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '3.1.0'
 }
 
 dependencyManagement {

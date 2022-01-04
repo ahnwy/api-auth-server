@@ -1,17 +1,14 @@
 package ai.ps.apiauthserver.model.vo;
 
-import ai.ps.apiauthserver.model.dto.TokenManagementDTO;
 import lombok.*;
 
 @Data
 @Builder
 public class JwtTokenVO {
-    private String uuid;
-    private String token;
+    private String serviceKey;
 
     public static JwtTokenVO ofToken(String uuid, String token){
-        return JwtTokenVO.builder().token(token)
-                .uuid(uuid)
+        return JwtTokenVO.builder().serviceKey(uuid)
                 .build();
     }
 }

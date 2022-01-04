@@ -1,7 +1,8 @@
 package ai.ps.apiauthserver.service;
 
 import ai.ps.apiauthserver.mapper.AuthMapper;
-import ai.ps.apiauthserver.model.dto.TokenManagementDTO;
+import ai.ps.apiauthserver.model.dto.TokenMgmtDTO;
+import ai.ps.apiauthserver.model.vo.ResUserVO;
 import ai.ps.apiauthserver.model.vo.UserVO;
 import ai.ps.apiauthserver.provider.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,29 +20,37 @@ public class AuthServiceImpl implements AuthService{
     AuthMapper authMapper;
 
     //토큰발급
-    @Override
     public String getToken(UserVO userVO){
-        return jwtToken(userVO);
+        return createJwtToken(userVO);
     }
+
     // 토큰 생성
-    public String jwtToken(UserVO userVO){
-        return jwtTokenProvider.createToken(userVO.getUserId(), Collections.singletonList("USER"));
-    }
+    public String createJwtToken(UserVO userVO){ return jwtTokenProvider.createJwtToken(userVO.getUserId(), Collections.singletonList("USER")); }
 
     // 토큰발급 확인
-    @Override
-    public Optional<TokenManagementDTO> getTokenYn(UserVO userVO){
-        return authMapper.selectTokenManagement(userVO);
-    }
+    public Optional<TokenMgmtDTO> checkTokenIssuance(UserVO userVO){ return authMapper.selectTokenMgmt(userVO); }
 
     // 토큰정보 저장
-    public int saveToken(TokenManagementDTO tokenManagementDTO){
-        return authMapper.saveToken(tokenManagementDTO);
+    public int saveToken(TokenMgmtDTO tokenMgmtDTO){ return authMapper.saveToken(tokenMgmtDTO); }
+    // 미터링 테이블에 유저 초기값으로 추가
+    public int createUserMetering(UserVO userVO){
+        return authMapper.createUserMetering(userVO);
     }
 
     // UUID 조회
-    @Override
-    public String getUuid(int userId){
-        return authMapper.getUuid(userId);
+    public String getServiceKey(int userId){
+        return authMapper.getServiceKey(userId);
+    }
+
+    // 토큰정보 삭제
+    public ResUserVO removeToken(UserVO userVO) {
+        ResUserVO resUserVO = new ResUserVO();
+        int res = authMapper.removeToken(userVO);
+        if(res == 1){
+            resUserVO.setMessage("Remove Successful");
+        } else {
+            resUserVO.setMessage("Remove Failed");
+        }
+        return resUserVO;
     }
 }

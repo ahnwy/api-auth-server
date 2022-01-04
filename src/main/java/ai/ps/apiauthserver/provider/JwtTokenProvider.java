@@ -47,9 +47,10 @@ public class JwtTokenProvider {
      * @param roles
      * @return
      */
-    public String createToken(int userId, List<String> roles) {
+    public String createJwtToken(int userId, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userId));
         claims.put("roles", roles);
+        claims.put("serviceId", roles);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
